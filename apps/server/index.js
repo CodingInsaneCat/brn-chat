@@ -12,14 +12,15 @@ const io = new Server(fastify.server, {
 });
 
 io.on('connection', (socket) => {
-    console.log('Usuário conectado com sucesso', socket.id);
+    console.log('User connected:', socket.id);
 
-    socket.on('send-message', (msg) => {
-        socket.broadcast.emit('receive-message', msg);
+    socket.on('send-message', ({ username, msg }) => {
+        const fullMessage = `${username}: ${msg}`;
+        socket.broadcast.emit('receive-message', fullMessage);
     });
 
-    socket.on('nudge', () => {
-        socket.broadcast.emit('nudge');
+    socket.on('nudge', (username) => {
+        socket.broadcast.emit('nudge', username);
     });
 });
 
