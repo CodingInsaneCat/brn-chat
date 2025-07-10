@@ -12,7 +12,7 @@ const io = new Server(fastify.server, {
 });
 
 io.on('connection', (socket) => {
-    console.log('User connected:', socket.id);
+    console.log('Usuário conectado com sucesso', socket.id);
 
     socket.on('send-message', (msg) => {
         socket.broadcast.emit('receive-message', msg);
